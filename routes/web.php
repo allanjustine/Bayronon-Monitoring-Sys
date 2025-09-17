@@ -14,7 +14,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::view('dashboard', 'dashboard')
         ->name('dashboard');
     Route::get('employees', EmployeesIndex::class)->name('employees.index');
-    Route::get('employees/{id}', Payment::class)->name('payments.show');
+    Route::get('employees/{id}/add-billings', Payment::class)->name('payments.show');
     Route::get('payments', PaymentsIndex::class)->name('payments.index');
     Route::get('utangs', UtangsIndex::class)->name('utangs.index');
 });

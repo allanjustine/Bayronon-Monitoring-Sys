@@ -22,12 +22,12 @@ class Employee extends Model
 
     public function totalBillings($totalPayments = 0)
     {
-        return $totalPayments - $this->payments()->sum('employee_payments.amount');
+        return $totalPayments - $this->payments->sum('pivot.amount');
     }
 
     public function noBillings($billingAmount = 0)
     {
-        return $this->payments()->sum('employee_payments.amount') >= $billingAmount;
+        return $this->payments->sum('pivot.amount') >= $billingAmount;
     }
 
     public function isPaid($amount)

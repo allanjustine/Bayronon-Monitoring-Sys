@@ -5,10 +5,11 @@
     @include('partials.head')
 </head>
 
-<body class="min-h-screen bg-white antialiased dark:bg-linear-to-b dark:from-neutral-950 dark:to-neutral-900 overflow-hidden">
-
-    {{ $slot }}
-
+<body
+    class="min-h-screen bg-white antialiased dark:bg-linear-to-b dark:from-neutral-950 dark:to-neutral-900 overflow-hidden">
+    <main>
+        {{ $slot }}
+    </main>
     @fluxScripts
 </body>
 

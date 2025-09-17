@@ -35,7 +35,7 @@
             <div class="mt-4 pt-4 border-t border-dark-300">
                 <p class="dark:text-gray-300 text-gray-600 flex gap-2">
                     <span class='font-bold'>
-                        Utang:
+                        Utang sa tindahan:
                     </span>
                     @if ($employee?->utangs?->isZeroUtang() || !$employee?->utangs)
                         <span class="bg-green-600 font-bold text-sm text-green-100 px-2 py-1 rounded-md">No Utang</span>
