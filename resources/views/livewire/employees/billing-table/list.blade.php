@@ -22,7 +22,8 @@
     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
         <div class="flex gap-2">
             @if ($billing->isNoBillings($billing->employee_payments_sum))
-                -
+                <livewire:employees.billing-table.edit :$billing :employee_id="$this->id" :remaining_billings="$billing->employeeRemainingBillings($billing->employee_payments_sum)"
+                    :key="'edit-payment-' . $billing->id" />
             @else
                 <livewire:employees.billing-table.pay :$billing :employee_id="$this->id" :remaining_billings="$billing->employeeRemainingBillings($billing->employee_payments_sum)" :key="'add-payment-' . $billing->id" />
             @endif

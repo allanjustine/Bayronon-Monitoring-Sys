@@ -1,11 +1,15 @@
 <div>
     <div class="space-y-3">
-        <div>
-            <flux:heading size="lg">Billings for employee {{ $name }}</flux:heading>
-            <flux:text class="mt-2 text-wrap">Billings for {{ $name }} employee to your bayronon
-                monitoring
-                system.
-            </flux:text>
+        <div class="flex justify-between items-center">
+            <div>
+                <flux:heading size="lg">Billings for employee {{ $name }}</flux:heading>
+                <flux:text class="mt-2 text-wrap">Billings for {{ $name }} employee to your bayronon
+                    monitoring
+                    system.
+                </flux:text>
+            </div>
+            <flux:button variant="outline" class="!bg-blue-500 hover:!bg-blue-600" wire:click='payAll' wire:confirm='Are you sure you want to mark all as pay?'>Pay All
+            </flux:button>
         </div>
 
         <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">

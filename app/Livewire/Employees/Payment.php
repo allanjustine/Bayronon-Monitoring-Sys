@@ -32,6 +32,39 @@ class Payment extends Component
             ->get();
     }
 
+    public function payAll()
+    {
+        $payments = ModelsPayment::query()
+            ->whereDoesntHave(
+                'employees',
+                fn($q)
+                =>
+                $q->where('employee_id', $this->id)
+            )
+            ->get();
+
+        $employee = Employee::findOrFail($this->id);
+
+        $data = [];
+
+        foreach ($payments as $payment) {
+            $data[$payment->id] = [
+                'amount' => $payment->amount
+            ];
+        }
+
+        $employee->payments()->attach($data);
+
+        $this->dispatch('toast', data: [
+            'message'   => "{$this->name} payments marked all as paid successfully.",
+            'type'      => 'success'
+        ]);
+
+        $this->dispatch('payments:refresh');
+
+        return;
+    }
+
     public function render()
     {
         return view('livewire.employees.payment');

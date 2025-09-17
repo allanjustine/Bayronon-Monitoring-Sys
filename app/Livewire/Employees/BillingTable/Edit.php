@@ -3,17 +3,17 @@
 namespace App\Livewire\Employees\BillingTable;
 
 use App\Models\Employee;
-use App\Models\Payment;
 use Flux\Flux;
 use Livewire\Component;
 
-class Pay extends Component
+class Edit extends Component
 {
     public int $id = 0;
     public int $employee_id = 0;
     public string $title = '';
     public int $amount = 0;
     public int $remaining_billings = 0;
+    public int $billing_amount = 0;
 
     public function mount($billing, $employee_id, $remaining_billings)
     {
@@ -22,38 +22,41 @@ class Pay extends Component
         $this->title = $billing->title;
         $this->remaining_billings = $remaining_billings;
         $this->amount = $remaining_billings;
+        $this->billing_amount = $billing->amount;
     }
 
     protected function rules()
     {
         return [
-            'amount'        => ['required', 'numeric', 'gte:1']
+            'amount'        => ['required', 'numeric']
         ];
     }
 
-    public function addPayment()
+    public function editPayment()
     {
         $this->validate();
 
         $employee = Employee::findOrFail($this->employee_id);
 
-        if ($this->amount > $this->remaining_billings) {
-            $this->addError('amount', "Please enter an amount less than or equal to {$this->remaining_billings}.");
+        if ($this->amount > $this->billing_amount) {
+            $this->addError('amount', "Please enter an amount less than or equal to {$this->billing_amount}.");
 
             return $this->dispatch('toast', data: [
-                'message'   => "Please enter an amount less than or equal to {$this->remaining_billings}.",
+                'message'   => "Please enter an amount less than or equal to {$this->billing_amount}.",
                 'type'      => 'error'
             ]);
         }
+
+        $employee->payments()->detach($this->id);
 
         $employee->payments()->attach($this->id, [
             'amount' => $this->amount
         ]);
 
-        Flux::modal("add-payment-{$this->id}")->close();
+        Flux::modal("edit-payment-{$this->id}")->close();
 
         $this->dispatch('toast', data: [
-            'message'   => "Payment added successfully.",
+            'message'   => "Payment updated successfully.",
             'type'      => 'success'
         ]);
 
@@ -68,6 +71,6 @@ class Pay extends Component
 
     public function render()
     {
-        return view('livewire.employees.billing-table.pay');
+        return view('livewire.employees.billing-table.edit');
     }
 }
