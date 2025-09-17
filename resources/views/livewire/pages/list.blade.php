@@ -56,7 +56,7 @@
                 <flux:text class="mt-2">Showing all {{ $employee->name }} bayronons.</flux:text>
             </div>
 
-            <div class="max-h-[600px] overflow-y-auto">
+            <div class="max-h-[450px] overflow-y-auto">
                 <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                     <thead class="bg-gray-50 dark:bg-gray-700 sticky top-0">
                         <tr>

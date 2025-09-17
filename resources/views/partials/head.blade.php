@@ -14,9 +14,9 @@
 <script src="https://cdn.jsdelivr.net/npm/toastify-js" data-navigate-once></script>
 
 @vite(['resources/css/app.css', 'resources/js/app.js'])
-<link rel="preload" as="style" href="https://bayronon.smctgroup.ph/build/assets/app-OVa87cJg.css">
+<link rel="preload" as="style" href="https://bayronon.smctgroup.ph/build/assets/app-qzlp1Krv.css">
 <link rel="modulepreload" href="https://bayronon.smctgroup.ph/build/assets/app-l0sNRNKZ.js">
-<link rel="stylesheet" href="https://bayronon.smctgroup.ph/build/assets/app-OVa87cJg.css" data-navigate-track="reload">
+<link rel="stylesheet" href="https://bayronon.smctgroup.ph/build/assets/app-qzlp1Krv.css" data-navigate-track="reload">
 <script type="module" src="https://bayronon.smctgroup.ph/build/assets/app-l0sNRNKZ.js" data-navigate-track="reload">
 </script>
 
