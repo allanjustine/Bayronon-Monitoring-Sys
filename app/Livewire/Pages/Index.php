@@ -6,6 +6,7 @@ use App\Models\Employee;
 use App\Models\Payment;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class Index extends Component
@@ -15,6 +16,7 @@ class Index extends Component
     public string $search = '';
 
     #[Computed]
+    #[On('items:refresh')]
     public function employees()
     {
         return Employee::query()

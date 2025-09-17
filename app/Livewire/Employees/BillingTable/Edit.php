@@ -49,9 +49,11 @@ class Edit extends Component
 
         $employee->payments()->detach($this->id);
 
-        $employee->payments()->attach($this->id, [
-            'amount' => $this->amount
-        ]);
+        if ($this->amount > 0) {
+            $employee->payments()->attach($this->id, [
+                'amount' => $this->amount
+            ]);
+        }
 
         Flux::modal("edit-payment-{$this->id}")->close();
 
