@@ -13,7 +13,7 @@ class Index extends Component
 {
     use WithPagination;
 
-    #[Title('Payments')]
+    #[Title('Admin | Payments')]
 
     public string $search = '';
 

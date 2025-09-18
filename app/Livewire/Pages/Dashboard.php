@@ -13,7 +13,7 @@ class Dashboard extends Component
     use DashboardTrait;
 
     #[Layout('components.layouts.app')]
-    #[Title('Dashboard')]
+    #[Title('Admin | Dashboard')]
 
     #[Computed]
     public function totals()

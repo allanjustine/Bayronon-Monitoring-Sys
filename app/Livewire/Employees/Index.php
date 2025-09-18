@@ -14,7 +14,7 @@ class Index extends Component
 {
     use WithPagination;
 
-    #[Title('Employees')]
+    #[Title('Admin | Employees')]
 
     public string $search = '';
 

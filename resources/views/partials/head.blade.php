@@ -15,9 +15,9 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
 @vite(['resources/css/app.css', 'resources/js/app.js'])
-<link rel="preload" as="style" href="https://bayronon.smctgroup.ph/build/assets/app-CrbPSGQ-.css">
+<link rel="preload" as="style" href="https://bayronon.smctgroup.ph/build/assets/app-Pbkkcxag.css">
 <link rel="modulepreload" href="https://bayronon.smctgroup.ph/build/assets/app-l0sNRNKZ.js">
-<link rel="stylesheet" href="https://bayronon.smctgroup.ph/build/assets/app-CrbPSGQ-.css" data-navigate-track="reload">
+<link rel="stylesheet" href="https://bayronon.smctgroup.ph/build/assets/app-Pbkkcxag.css" data-navigate-track="reload">
 <script type="module" src="https://bayronon.smctgroup.ph/build/assets/app-l0sNRNKZ.js" data-navigate-track="reload">
 </script>
 

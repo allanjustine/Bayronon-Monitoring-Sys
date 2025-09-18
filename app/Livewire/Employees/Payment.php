@@ -13,10 +13,8 @@ class Payment extends Component
     public int $id = 0;
     public string $name = '';
 
-    public function mount($id)
+    public function mount(Employee $employee)
     {
-        $employee = Employee::findOrFail($id);
-
         $this->id = $employee->id;
         $this->name = $employee->name;
     }
