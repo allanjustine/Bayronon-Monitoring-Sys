@@ -61,19 +61,19 @@
                     <thead class="bg-gray-50 dark:bg-gray-700 sticky top-0">
                         <tr>
                             <th scope="col"
-                                class="px-6 py-3 text-left text-xs font-medium dark:text-gray-500 dark:dark:text-gray-300 text-gray-600 uppercase tracking-wider">
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                                 Title
                             </th>
                             <th scope="col"
-                                class="px-6 py-3 text-left text-xs font-medium dark:text-gray-500 dark:dark:text-gray-300 text-gray-600 uppercase tracking-wider">
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                                 Description
                             </th>
                             <th scope="col"
-                                class="px-6 py-3 text-left text-xs font-medium dark:text-gray-500 dark:dark:text-gray-300 text-gray-600 uppercase tracking-wider">
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                                 Paid
                             </th>
                             <th scope="col"
-                                class="px-6 py-3 text-left text-xs font-medium dark:text-gray-500 dark:dark:text-gray-300 text-gray-600 uppercase tracking-wider">
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                                 Paid At
                             </th>
                         </tr>

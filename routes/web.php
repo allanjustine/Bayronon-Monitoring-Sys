@@ -2,6 +2,7 @@
 
 use App\Livewire\Employees\Index as EmployeesIndex;
 use App\Livewire\Employees\Payment;
+use App\Livewire\Pages\Dashboard;
 use App\Livewire\Pages\Index;
 use App\Livewire\Payments\Index as PaymentsIndex;
 use App\Livewire\Utangs\Index as UtangsIndex;
@@ -11,8 +12,7 @@ use Livewire\Volt\Volt;
 Route::get('/', Index::class)->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::view('dashboard', 'dashboard')
-        ->name('dashboard');
+    Route::get('dashboard', Dashboard::class)->name('dashboard');
     Route::get('employees', EmployeesIndex::class)->name('employees.index');
     Route::get('employees/{id}/add-billings', Payment::class)->name('payments.show');
     Route::get('payments', PaymentsIndex::class)->name('payments.index');
