@@ -1,6 +1,7 @@
 <div>
     <div class="flex justify-between p-5">
-        <div>
+        <div class="flex gap-4 items-center ml-5">
+            <img src="{{ asset('logo/no-money.png') }}" alt="Logo" class="w-12 h-12" />
             <h1 class="text-2xl font-bold text-gray-800 dark:text-white">Mga naay bayronon</h1>
         </div>
         <div class="flex gap-2 items-center">
