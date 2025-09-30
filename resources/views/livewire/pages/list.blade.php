@@ -49,7 +49,7 @@
         </div>
     </flux:modal.trigger>
 
-    <flux:modal name="show-employee-details-{{ $employee->id }}" class="w-full sm:w-10/12">
+    <flux:modal name="show-employee-details-{{ $employee->id }}" class="!w-full !sm:w-10/12">
         <div class="space-y-6">
             <div>
                 <flux:heading size="lg">{{ $employee->name }} bayronon details...</flux:heading>
