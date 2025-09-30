@@ -6,10 +6,12 @@ use App\Models\Employee;
 use App\Models\Payment as ModelsPayment;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 
 class Payment extends Component
 {
+    #[Title('Admin | Add Billings')]
     public int $id = 0;
     public string $name = '';
 
