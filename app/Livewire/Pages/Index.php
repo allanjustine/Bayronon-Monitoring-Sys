@@ -7,11 +7,14 @@ use App\Models\Payment;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\On;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 
 class Index extends Component
 {
     #[Layout('components.layouts.home')]
+
+    #[Title('Home')]
 
     public string $search = '';
 
