@@ -1,0 +1,65 @@
+version: '3.8'
+
+services:
+  bayronon-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: bayronon-app
+    restart: unless-stopped
+    working_dir: /var/www/html
+    volumes:
+      - .:/var/www/html
+      - ./default.conf:/etc/nginx/conf.d/default.conf
+      - ./php.ini:/usr/local/etc/php/php.ini
+      - ./storage:/var/www/html/storage
+      - ./public/style.css:/var/www/html/public/style.css
+    environment:
+        APP_ENV: production
+        APP_URL: https://bayronon.smctgroup.ph
+        DB_CONNECTION: mysql
+        DB_HOST: 172.17.0.1
+        DB_PORT: 3306
+        DB_DATABASE: bayronon_sys
+        DB_USERNAME: smct
+        DB_PASSWORD: smct
+        PUSHER_APP_ID: 1962323
+        PUSHER_APP_KEY: 4a7679920b500c68c69c
+        PUSHER_APP_SECRET: 1aaea6fab0da6050d8eb
+        PUSHER_HOST: bayronon.smctgroup.ph
+        PUSHER_PORT: 443
+        PUSHER_SCHEME: https
+        PUSHER_APP_CLUSTER: ap1
+    networks:
+      - bayronon-network
+
+  bayronon-nginx:
+    image: nginx:alpine
+    container_name: bayronon-nginx
+    restart: unless-stopped
+    ports:
+      - "9111:9111"
+    volumes:
+      - .:/var/www/html
+      - ./default.conf:/etc/nginx/conf.d/default.conf
+      - ./php.ini:/usr/local/etc/php/php.ini
+      - ./storage:/var/www/html/storage
+      - ./public/style.css:/var/www/html/public/style.css
+    networks:
+      - bayronon-network
+    depends_on:
+      - bayronon-app
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: smct-bayronon-tunnel
+    restart: unless-stopped
+    command: tunnel run --url http://bayronon-nginx:9111
+    environment:
+      - TUNNEL_TOKEN=eyJhIjoiODE3YmEzYzg5MGM0YTRmYzRjN2YwYTg1NmQ3YzFmODciLCJ0IjoiMTQ3ZjA5OTQtN2FhZi00NWM4LWFjZmQtMDMzZWY4Yjk5M2Q2IiwicyI6Ik5tRTJZamhsWW1JdE1UY3pZaTAwTldJM0xUbGxOamt0TVRneVpqVXpNR1UyWXpBeiJ9
+    networks:
+      - bayronon-network
+
+networks:
+  bayronon-network:
+    driver: bridge
