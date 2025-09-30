@@ -1,6 +1,7 @@
 <meta charset="utf-8" />
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bayronon Monitoring | {{ $title ?? config('app.name') }}</title>
 <link rel="icon" href="/favicon.ico?v=2" sizes="any">
 <link rel="icon" href="/favicon.svg?v=2" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=2">
@@ -16,14 +17,8 @@
 <script type="module" src="https://bayronon.smctgroup.ph/build/assets/app-l0sNRNKZ.js" data-navigate-track="reload">
 </script>
 
-{{-- FOR BASIC META --}}
-<meta name="title" content="Bayronon Monitoring | {{ $title ?? 'Not Set' }}">
-<meta name="description"
-    content="Bayronon offers lightning-fast calculations and seamless payment processing, ensuring a smooth and efficient transaction experience. Whether you're managing complex billing or making routine payments, Bayronon's smart system handles computations instantly and processes payments without delay — saving you time and increasing productivity.">
-<meta name="author" content="Allan Justine Mascariñas" />
-
 {{-- FOR OG --}}
-<meta property="og:title" content="Bayronon Monitoring | {{ $title ?? 'Not Set' }}">
+<meta property="og:title" content="Bayronon Monitoring | {{ $title ?? config('app.name') }}">
 <meta property="og:description"
     content="Bayronon offers lightning-fast calculations and seamless payment processing, ensuring a smooth and efficient transaction experience. Whether you're managing complex billing or making routine payments, Bayronon's smart system handles computations instantly and processes payments without delay — saving you time and increasing productivity.">
 <meta property="og:image" content="{{ asset('logo/no-money.png') }}">
@@ -33,9 +28,15 @@
 
 {{-- FOR TWITTER --}}
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Bayronon Monitoring | {{ $title ?? 'Not Set' }}">
+<meta name="twitter:title" content="Bayronon Monitoring | {{ $title ?? config('app.name') }}">
 <meta name="twitter:description"
     content="Bayronon offers lightning-fast calculations and seamless payment processing, ensuring a smooth and efficient transaction experience. Whether you're managing complex billing or making routine payments, Bayronon's smart system handles computations instantly and processes payments without delay — saving you time and increasing productivity.">
 <meta name="twitter:image" content="{{ asset('logo/no-money.png') }}">
+
+{{-- FOR BASIC META --}}
+<meta name="title" content="Bayronon Monitoring | {{ $title ?? config('app.name') }}">
+<meta name="description"
+    content="Bayronon offers lightning-fast calculations and seamless payment processing, ensuring a smooth and efficient transaction experience. Whether you're managing complex billing or making routine payments, Bayronon's smart system handles computations instantly and processes payments without delay — saving you time and increasing productivity.">
+<meta name="author" content="Allan Justine Mascariñas" />
 
 @fluxAppearance
