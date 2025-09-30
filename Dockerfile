@@ -1,6 +1,5 @@
 FROM php:8.2-fpm
 
-# Install system dependencies
 RUN apt-get update && apt-get install -y \
     git unzip libpng-dev libjpeg-dev libfreetype6-dev libonig-dev libzip-dev zip curl
 
@@ -20,17 +19,15 @@ COPY . .
 # Add Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# ✅ Run Composer install
+# Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
 
-# Run frontend build
+# Build frontend assets
 RUN npm install && npm run build
 
-# Permissions
+# Fix permissions
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Expose the port
 EXPOSE 9111
 
-# Start PHP-FPM
 CMD ["php-fpm"]
