@@ -23,11 +23,6 @@ services:
         DB_DATABASE: bayronon_sys
         DB_USERNAME: smct
         DB_PASSWORD: smct
-        REVERB_APP_ID: 598309
-        REVERB_APP_KEY: c7ka37uoxutbjvnchvyl
-        REVERB_APP_SECRET: fmz4y3j9vgy5ab3hgqdm
-        REVERB_HOST: "bayronon.smctgroup.ph"
-        REVERB_PORT: 9112
     networks:
       - bayronon-network
 
