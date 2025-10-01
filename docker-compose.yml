@@ -69,12 +69,12 @@ services:
     - LARAVEL_REVERB_APP_KEY=${REVERB_APP_KEY}
     - LARAVEL_REVERB_APP_SECRET=${REVERB_APP_SECRET}
     depends_on:
-    - bayronon-server
+    - bayronon-app
     restart: unless-stopped
     container_name: bayronon-reverb
 
     networks:
-      - bayronon-server
+      - bayronon-network
 
 networks:
   bayronon-network:
