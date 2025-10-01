@@ -60,16 +60,16 @@ services:
 
   bayronon-reverb:
     build:
-    context: ./
-    dockerfile: Dockerfile-reverb
+      context: ./
+      dockerfile: Dockerfile-reverb
     ports:
-      - "9112:9112" # expose Reverb server
+    - "9112:9112" # expose Reverb server
     environment:
-      - APP_URL=${APP_URL}
-      - LARAVEL_REVERB_APP_KEY=${REVERB_APP_KEY}
-      - LARAVEL_REVERB_APP_SECRET=${REVERB_APP_SECRET}
+    - APP_URL=${APP_URL}
+    - LARAVEL_REVERB_APP_KEY=${REVERB_APP_KEY}
+    - LARAVEL_REVERB_APP_SECRET=${REVERB_APP_SECRET}
     depends_on:
-      - bayronon-server
+    - bayronon-server
     restart: unless-stopped
     container_name: bayronon-reverb
 
