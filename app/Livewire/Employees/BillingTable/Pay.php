@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Employees\BillingTable;
 
+use App\Events\RefreshEvent;
 use App\Models\Employee;
 use App\Models\Payment;
 use Flux\Flux;
@@ -62,6 +63,8 @@ class Pay extends Component
         $this->reset([
             'amount'
         ]);
+
+        RefreshEvent::dispatch();
 
         return;
     }

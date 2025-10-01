@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Employees;
 
+use App\Events\RefreshEvent;
 use App\Models\Employee;
 use Flux\Flux;
 use Livewire\Component;
@@ -29,6 +30,8 @@ class Delete extends Component
         Flux::modal("delete-employee-{$employee->id}")->close();
 
         $this->dispatch('employees:refresh');
+
+        RefreshEvent::dispatch();
 
         return;
     }

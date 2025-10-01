@@ -20,6 +20,7 @@ class Index extends Component
 
     #[Computed]
     #[On('items:refresh')]
+    #[On('echo:refresh-items,RefreshEvent')]
     public function employees()
     {
         return Employee::query()
@@ -38,7 +39,7 @@ class Index extends Component
                     ], 'LIKE', "%{$this->search}%")
                 )
             )
-            ->inRandomOrder()
+            ->orderBy('name')
             ->get();
     }
 

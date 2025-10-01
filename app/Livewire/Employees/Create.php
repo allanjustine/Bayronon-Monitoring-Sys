@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Employees;
 
+use App\Events\RefreshEvent;
 use App\Models\Employee;
 use Flux\Flux;
 use Illuminate\Validation\Rule;
@@ -43,6 +44,8 @@ class Create extends Component
         $this->dispatch('employees:refresh');
 
         $this->reset();
+
+        RefreshEvent::dispatch();
 
         return;
     }

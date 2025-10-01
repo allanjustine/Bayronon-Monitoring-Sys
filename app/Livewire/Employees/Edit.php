@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Employees;
 
+use App\Events\RefreshEvent;
 use App\Models\Employee;
 use Flux\Flux;
 use Illuminate\Validation\Rule;
@@ -51,6 +52,8 @@ class Edit extends Component
         Flux::modal("edit-employee-{$employee->id}")->close();
 
         $this->dispatch('employees:refresh');
+
+        RefreshEvent::dispatch();
 
         return;
     }

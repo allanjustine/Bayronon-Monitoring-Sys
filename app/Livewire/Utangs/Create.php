@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Utangs;
 
+use App\Events\RefreshEvent;
 use App\Models\Employee;
 use App\Models\Utang;
 use Flux\Flux;
@@ -52,6 +53,8 @@ class Create extends Component
         Flux::modal('create-utang')->close();
 
         $this->reset();
+
+        RefreshEvent::dispatch();
 
         return;
     }

@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Payments;
 
+use App\Events\RefreshEvent;
 use App\Models\Payment;
 use Flux\Flux;
 use Livewire\Component;
@@ -50,6 +51,8 @@ class Edit extends Component
         Flux::modal("edit-payment-{$payment->id}")->close();
 
         $this->dispatch('payments:refresh');
+
+        RefreshEvent::dispatch();
 
         return;
     }

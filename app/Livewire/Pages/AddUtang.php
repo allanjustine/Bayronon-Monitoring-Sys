@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Pages;
 
+use App\Events\RefreshEvent;
 use App\Models\Employee;
 use Flux\Flux;
 use Illuminate\Validation\Rule;
@@ -46,6 +47,8 @@ class AddUtang extends Component
         ]);
 
         $this->dispatch('items:refresh');
+
+        RefreshEvent::dispatch();
 
         return;
     }

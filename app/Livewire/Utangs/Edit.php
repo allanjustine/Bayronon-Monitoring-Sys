@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Utangs;
 
+use App\Events\RefreshEvent;
 use App\Models\Utang;
 use Flux\Flux;
 use Illuminate\Validation\Rule;
@@ -49,6 +50,8 @@ class Edit extends Component
         Flux::modal("edit-utang-{$utang->id}")->close();
 
         $this->dispatch('utangs:refresh');
+
+        RefreshEvent::dispatch();
 
         return;
     }

@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Employees;
 
+use App\Events\RefreshEvent;
 use App\Models\Employee;
 use App\Models\Payment as ModelsPayment;
 use Livewire\Attributes\Computed;
@@ -61,6 +62,8 @@ class Payment extends Component
         ]);
 
         $this->dispatch('payments:refresh');
+
+        RefreshEvent::dispatch();
 
         return;
     }

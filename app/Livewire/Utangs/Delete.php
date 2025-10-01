@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Utangs;
 
+use App\Events\RefreshEvent;
 use App\Models\Utang;
 use Flux\Flux;
 use Livewire\Component;
@@ -34,6 +35,8 @@ class Delete extends Component
         Flux::modal("delete-utang-{$utang->id}")->close();
 
         $this->dispatch('utangs:refresh');
+
+        RefreshEvent::dispatch();
 
         return;
     }

@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Payments;
 
+use App\Events\RefreshEvent;
 use App\Models\Payment;
 use Flux\Flux;
 use Livewire\Component;
@@ -29,6 +30,8 @@ class Delete extends Component
         Flux::modal("delete-payment-{$payment->id}")->close();
 
         $this->dispatch('payments:refresh');
+
+        RefreshEvent::dispatch();
 
         return;
     }

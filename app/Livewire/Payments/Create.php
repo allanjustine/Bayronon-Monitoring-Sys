@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Payments;
 
+use App\Events\RefreshEvent;
 use App\Models\Payment;
 use Flux\Flux;
 use Livewire\Component;
@@ -42,6 +43,8 @@ class Create extends Component
         Flux::modal('create-payment')->close();
 
         $this->reset();
+
+        RefreshEvent::dispatch();
 
         return;
     }
