@@ -13,10 +13,4 @@ export default defineConfig({
     server: {
         cors: true,
     },
-    build: {
-        outDir: "public/flux",
-        rollupOptions: {
-            input: "resources/js/flux.js",
-        },
-    },
 });
