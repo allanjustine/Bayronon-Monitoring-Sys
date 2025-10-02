@@ -16,7 +16,13 @@
         <footer class="bg-gray-800 p-5 w-full mt-5">
             <div class="w-full flex justify-center flex-col items-center text-sm">
                 <p>&copy; {{ date('Y') }} mga naay bayronon.</p>
-                <a href="{{ route('login') }}" wire:navigate class="text-blue-500 hover:text-blue-500 hover:underline">Login</a>
+                @auth
+                    <a href="{{ route('dashboard') }}" wire:navigate
+                        class="text-blue-500 hover:text-blue-500 hover:underline">Dashboard</a>
+                @else
+                    <a href="{{ route('login') }}" wire:navigate
+                        class="text-blue-500 hover:text-blue-500 hover:underline">Login</a>
+                @endauth
             </div>
         </footer>
     </div>
