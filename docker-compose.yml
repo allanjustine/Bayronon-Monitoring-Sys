@@ -80,7 +80,7 @@ services:
       - /home/webserver/systems/testing/Bayronon-Monitoring-Sys/.env:/var/www/.env
       - ./:/var/www
     networks:
-      - bayronon-network
+      - bayronon-app
     restart: unless-stopped
 
 networks:
