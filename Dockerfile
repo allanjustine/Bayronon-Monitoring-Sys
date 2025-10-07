@@ -1,33 +1,53 @@
 FROM php:8.3-fpm
 
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
-    git unzip libpng-dev libjpeg-dev libfreetype6-dev libonig-dev libzip-dev zip curl
+    build-essential \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    zip \
+    unzip \
+    git \
+    curl \
+    npm \
+    libzip-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    libjpeg62-turbo-dev \
+    autoconf \
+    pkg-config \
+    && docker-php-ext-configure zip \
+    && docker-php-ext-install pdo pdo_mysql zip gd
 
-# Install Node.js 20
-RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
-    apt-get install -y nodejs
-
-# Install PHP extensions
-RUN docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd zip
+# ✅ Install Redis extension
+RUN pecl install redis \
+    && docker-php-ext-enable redis
 
 # Set working directory
-WORKDIR /var/www/html
+WORKDIR /var/www
 
-# Copy application files
-COPY . .
-
-# Add Composer
+# Copy Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Install PHP dependencies
-RUN composer install --no-dev --optimize-autoloader
+# Copy application code
+COPY . /var/www
 
 # Build frontend assets
 RUN npm install && npm run build
 
-# Fix permissions
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+# Install PHP dependencies (prod only)
+RUN composer install --no-dev --optimize-autoloader
 
+# Set PHP upload limits
+RUN echo "upload_max_filesize=100M" > /usr/local/etc/php/conf.d/uploads.ini && \
+    echo "post_max_size=100M" >> /usr/local/etc/php/conf.d/uploads.ini
+
+# Set correct permissions
+RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
+
+# Expose port
 EXPOSE 9111
 
+# Start PHP-FPM
 CMD ["php-fpm"]
