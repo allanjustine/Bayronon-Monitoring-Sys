@@ -70,6 +70,9 @@ services:
       - bayronon-network
 
   queue-worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
     image: bayronon-app
     container_name: bayronon-app-worker
     working_dir: /var/www/
