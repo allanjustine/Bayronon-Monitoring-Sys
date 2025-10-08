@@ -34,6 +34,8 @@ class AddUtang extends Component
         $employee_utang += $this->amount;
 
         $employee->utangs()->updateOrCreate([
+            'employee_id'   => $employee->id
+        ], [
             'amount'        => $employee_utang
         ]);
 
