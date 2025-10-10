@@ -4,7 +4,7 @@
     </flux:modal.trigger>
 
     <flux:modal name="add-utang" class="md:w-96">
-        <form wire:submit.prevent='storeUtang'>
+        <form wire:submit.prevent='storeUtang' wire:confirm="Sure naka nga mag add kag utang balig {{ $amount }}?">
             <div class="space-y-3">
                 <div>
                     <flux:heading size="lg">Add new utang</flux:heading>
@@ -21,7 +21,7 @@
                 </flux:select>
                 <flux:error name="employee" />
 
-                <flux:input label="Amount" type="number" placeholder="Enter amount" wire:model='amount' />
+                <flux:input label="Amount" type="number" placeholder="Enter amount" wire:model.live.debounce.500ms='amount' />
 
                 <div class="flex gap-2">
                     <flux:spacer />

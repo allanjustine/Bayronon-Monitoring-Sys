@@ -11,9 +11,13 @@
     </div>
     <div class="w-full overflow-y-auto h-[calc(100vh-90px)] pt-5 px-5">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-5">
-            @each('livewire.pages.list', $this->employees, 'employee', 'livewire.pages.empty')
+            @forelse ($this->employees as $employee)
+                @include('livewire.pages.list', [$employee, $amount])
+            @empty
+                @include('livewire.pages.empty')
+            @endforelse
         </div>
-        <footer class="bg-gray-800 p-5 w-full mt-5">
+        <footer class="bg-gray-100 dark:bg-gray-800 p-5 w-full mt-5">
             <div class="w-full flex justify-center flex-col items-center text-sm">
                 <p>&copy; {{ date('Y') }} mga naay bayronon.</p>
                 @auth

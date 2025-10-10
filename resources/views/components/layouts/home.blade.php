@@ -11,6 +11,28 @@
         {{ $slot }}
     </main>
     @fluxScripts
+
+    <script data-navigate-once>
+        let loadOnce;
+        document.addEventListener('livewire:navigated', () => {
+            if (loadOnce) loadOnce();
+
+            loadOnce = Livewire.on('toast', (event) => {
+                const {
+                    message,
+                    type
+                } = event.data;
+
+                Toastify({
+                    text: message,
+                    duration: 5000,
+                    gravity: "bottom",
+                    position: "center",
+                    backgroundColor: type === 'success' ? '#4ade80' : '#f87171',
+                }).showToast();
+            });
+        });
+    </script>
 </body>
 
 </html>

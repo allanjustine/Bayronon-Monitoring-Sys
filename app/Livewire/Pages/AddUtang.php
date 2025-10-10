@@ -14,7 +14,6 @@ class AddUtang extends Component
     public int $amount = 1;
     public string $employee = "";
 
-
     protected function rules()
     {
         return [
@@ -45,7 +44,7 @@ class AddUtang extends Component
 
         $this->dispatch('toast', data: [
             'message' => 'Your new utang has been added successfully.',
-            'type' => 'success'
+            'type'    => 'success'
         ]);
 
         $this->dispatch('items:refresh');
