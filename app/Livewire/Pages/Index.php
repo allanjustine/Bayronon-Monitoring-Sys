@@ -19,6 +19,7 @@ class Index extends Component
     #[Title('Home')]
 
     public string $search = '';
+    public $items = [];
 
     #[Validate(['required', 'numeric', 'gte:1'])]
     public int $amount = 1;
@@ -53,6 +54,20 @@ class Index extends Component
     {
         return Payment::query()
             ->sum('amount');
+    }
+
+    public function remainingBillings($id)
+    {
+        $this->items = Payment::query()
+            ->withSum([
+                'employees as paid_total'
+                =>
+                fn($q)
+                =>
+                $q->where('employee_id', $id)
+            ], 'employee_payments.amount')
+            ->get()
+            ->filter(fn($item) => $item->paid_total < $item->amount);
     }
 
     public function storeUtang($employee_id)

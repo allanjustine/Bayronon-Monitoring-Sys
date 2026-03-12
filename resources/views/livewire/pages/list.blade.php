@@ -114,6 +114,17 @@
                                 </td>
                                 <td colspan="3" class="px-6 py-2 text-red-500 whitespace-nowrap">
                                     ₱{{ number_format($employee->totalBillings($this->totalPayments), '2', '.', ',') }}
+                                    <flux:tooltip toggleable>
+                                        <flux:button icon="eye" variant="ghost"
+                                            wire:click="remainingBillings({{ $employee->id }})" />
+                                        <flux:tooltip.content class="max-w-[20rem] space-y-2">
+                                            <flex:heading class="text-[20px]">Remaining Kuwang</flex:heading>
+                                            <flux:separator />
+                                            @foreach ($this->items as $item)
+                                                <p class="text-[15px]"><span class="font-bold">{{ $item->title }}:</span> ₱{{ number_format($item->amount - $item->paid_total, '2', '.', ',') }}</span></p>
+                                            @endforeach
+                                        </flux:tooltip.content>
+                                    </flux:tooltip>
                                 </td>
                             </tr>
                         @endif
