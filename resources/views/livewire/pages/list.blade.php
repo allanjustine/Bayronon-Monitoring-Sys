@@ -249,7 +249,7 @@
                                                                             $item->amount - ($item->paid_total ?? 0);
                                                                     @endphp
                                                                     <span
-                                                                        class="inline-flex items-center px-2 py-1 bg-red-100 dark:bg-red-800/30 text-red-700 dark:text-red-300 text-xs font-bold rounded-md">
+                                                                        class="inline-flex items-center px-2 py-1 bg-red-100 dark:bg-red-800 text-red-700 dark:text-red-300 text-xs font-bold rounded-md">
                                                                         ₱{{ number_format($remaining, 2, '.', ',') }}
                                                                     </span>
                                                                 </div>
