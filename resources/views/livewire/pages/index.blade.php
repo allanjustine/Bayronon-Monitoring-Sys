@@ -17,7 +17,7 @@
                 @include('livewire.pages.empty')
             @endforelse
         </div>
-        <footer class="bg-gray-50 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 py-5 w-full mt-5">
+        <footer class="bg-gray-50 dark:bg-gray-800 p-5 w-full mt-5">
             <div class="flex flex-col items-center justify-center space-y-2 text-sm">
                 <p class="text-gray-600 dark:text-gray-400">
                     &copy; {{ date('Y') }} mga naay bayronon.

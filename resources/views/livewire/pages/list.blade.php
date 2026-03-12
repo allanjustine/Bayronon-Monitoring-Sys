@@ -10,13 +10,13 @@
                 <div class="flex items-start justify-between mb-4">
                     <div class="flex-1">
                         <div class="flex items-center gap-2 mb-1">
-                            <h3 class="text-xl font-bold text-gray-900 dark:text-white">{{ $employee->name }}</h3>
-                            <flux:badge color="gray" size="sm" icon="briefcase">{{ $employee->position }}
+                            <h3 class="text-xl font-bold text-gray-800 w-24 truncate dark:text-white">{{ $employee->name }}</h3>
+                            <flux:badge color="gray" size="sm" icon="briefcase" class="w-24 truncate">{{ $employee->position }}
                             </flux:badge>
                         </div>
                         <div class="flex items-center gap-2 text-sm">
                             <flux:icon name="building-office" class="w-4 h-4 text-gray-400" />
-                            <span class="text-gray-600 dark:text-gray-300">{{ $employee->department }}</span>
+                            <span class="text-gray-600 dark:text-gray-300 w-48 truncate">{{ $employee->department }}</span>
                         </div>
                     </div>
 
@@ -31,23 +31,23 @@
                     </div>
                 </div>
 
-                <!-- Stats Grid -->
-                <div class="grid grid-cols-2 gap-4 mt-4">
+                <!-- Stats Flex -->
+                <div class="flex gap-4 mt-4">
                     <!-- Total Billings -->
-                    <div class="bg-gray-50 dark:bg-gray-700/50 rounded-xl p-3">
+                    <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-3 w-full">
                         <span
                             class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Bayronon</span>
                         <div class="mt-1 flex items-baseline gap-1">
-                            <span class="text-2xl font-bold text-gray-900 dark:text-white">₱</span>
+                            <span class="text-2xl font-bold text-gray-800 dark:text-white">₱</span>
                             <span
-                                class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                                class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent truncate">
                                 {{ number_format($employee->totalBillings($this->totalPayments), 2, '.', ',') }}
                             </span>
                         </div>
                     </div>
 
                     <!-- Status -->
-                    <div class="bg-gray-50 dark:bg-gray-700/50 rounded-xl p-3">
+                    <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-3 w-full">
                         <span
                             class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Status</span>
                         <div class="mt-2">
@@ -84,8 +84,8 @@
         </div>
     </flux:modal.trigger>
 
-    <flux:modal name="show-employee-details-{{ $employee->id }}" class="sm:max-w-5xl">
-        <div class="space-y-8">
+    <flux:modal name="show-employee-details-{{ $employee->id }}" class="sm:w-10/12 max-w-[95vw] !w-[1000px]">
+        <div class="flex flex-col gap-8">
             <!-- Modal Header -->
             <div class="flex items-start justify-between">
                 <div>
@@ -108,26 +108,26 @@
             </div>
 
             <!-- Quick Stats -->
-            <div class="grid grid-cols-4 gap-4">
-                <div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+            <div class="flex gap-4">
+                <div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-4 w-full">
                     <span class="text-sm text-gray-500 dark:text-gray-400">Total Paid</span>
-                    <p class="text-2xl font-bold text-gray-900 dark:text-white mt-1">
+                    <p class="text-2xl font-bold text-gray-800 dark:text-white mt-1">
                         ₱{{ number_format($employee->payments_sum_employee_paymentsamount ?? 0, 2, '.', ',') }}
                     </p>
                 </div>
-                <div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+                <div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-4 w-full">
                     <span class="text-sm text-gray-500 dark:text-gray-400">Remaining Balance</span>
                     <p class="text-2xl font-bold text-red-500 mt-1">
                         ₱{{ number_format($employee->totalBillings($this->totalPayments), 2, '.', ',') }}
                     </p>
                 </div>
-                <div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+                <div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-4 w-full">
                     <span class="text-sm text-gray-500 dark:text-gray-400">Total Billings</span>
                     <p class="text-2xl font-bold text-purple-500 mt-1">
                         ₱{{ number_format($employee->totalBillings($this->totalPayments) + ($employee->payments_sum_employee_paymentsamount ?? 0), 2, '.', ',') }}
                     </p>
                 </div>
-                <div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+                <div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-4 w-full">
                     <span class="text-sm text-gray-500 dark:text-gray-400">Store Utang</span>
                     @if ($employee?->utangs?->isZeroUtang() || !$employee?->utangs)
                         <flux:badge color="green" size="sm" class="mt-2">No Utang</flux:badge>
@@ -140,8 +140,8 @@
             </div>
 
             <!-- Payments Table -->
-            <div class="bg-gray-50 dark:bg-gray-800/50 rounded-xl p-6">
-                <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Payment History</h4>
+            <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-6">
+                <h4 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Payment History</h4>
                 <div class="max-h-[400px] overflow-y-auto rounded-lg border border-gray-200 dark:border-gray-700">
                     <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                         <thead class="bg-gray-100 dark:bg-gray-800 sticky top-0">
@@ -160,7 +160,7 @@
                                     Date</th>
                             </tr>
                         </thead>
-                        <tbody class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-800">
+                        <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-800">
                             @each('livewire.pages.billing-list', $employee->payments, 'billing', 'livewire.pages.billing-empty')
                         </tbody>
                         <tfoot class="sticky bottom-0 bg-gray-100 dark:bg-gray-800">
@@ -178,14 +178,15 @@
                                     <td colspan="2" class="px-6 py-3 text-right font-semibold">Remaining Balance:
                                     </td>
                                     <td class="px-6 py-3 font-bold text-red-600 dark:text-red-400">
-                                        ₱{{ number_format($employee->totalBillings($this->totalPayments), 2, '.', ',') }}
+                                        <div class="flex gap-2 items-center">
+                                            <span>₱{{ number_format($employee->totalBillings($this->totalPayments), 2, '.', ',') }}</span>
                                         <flux:tooltip position="right" toggleable>
                                             <flux:button size="xs" icon="information-circle" variant="ghost"
                                                 wire:click="remainingBillings({{ $employee->id }})"
                                                 class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors" />
 
                                             <flux:tooltip.content
-                                                class="!w-[300px] !max-w-[350px] !p-4 !bg-white dark:!bg-gray-800 !shadow-xl !rounded-xl !border !border-gray-200 dark:!border-gray-700">
+                                                class="!w-[350px] !max-w-[450px] !p-4 !bg-white dark:!bg-gray-800 !shadow-xl !rounded-xl !border !border-gray-200 dark:!border-gray-700">
                                                 <!-- Header with Gradient -->
                                                 <div class="flex items-center gap-2 mb-3">
                                                     <div
@@ -193,7 +194,7 @@
                                                         <flux:icon name="chart-pie" class="w-4 h-4 text-white" />
                                                     </div>
                                                     <div>
-                                                        <h4 class="font-bold text-gray-900 dark:text-white">Remaining
+                                                        <h4 class="font-bold text-gray-800 dark:text-white">Remaining
                                                             Balance</h4>
                                                         <p class="text-xs text-gray-500 dark:text-gray-400">Unpaid
                                                             items breakdown</p>
@@ -207,7 +208,7 @@
                                                     class="space-y-3 max-h-[250px] overflow-y-auto pr-1 custom-scrollbar">
                                                     @forelse ($this->items as $item)
                                                         <div
-                                                            class="group/item p-2 hover:bg-gray-50 dark:hover:bg-gray-700/50 rounded-lg transition-all">
+                                                            class="group/item p-2 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-all">
                                                             <div class="flex items-start justify-between gap-2">
                                                                 <div class="flex-1 min-w-0">
                                                                     <div class="flex items-center gap-1.5">
@@ -221,8 +222,8 @@
                                                                     </div>
 
                                                                     <!-- Amount Details -->
-                                                                    <div class="mt-1.5 grid grid-cols-2 gap-2 text-xs">
-                                                                        <div>
+                                                                    <div class="mt-1.5 flex items-center gap-2 text-xs">
+                                                                        <div class="w-full">
                                                                             <span
                                                                                 class="text-gray-500 dark:text-gray-400">Total:</span>
                                                                             <span
@@ -230,7 +231,7 @@
                                                                                 ₱{{ number_format($item->amount, 2, '.', ',') }}
                                                                             </span>
                                                                         </div>
-                                                                        <div>
+                                                                        <div class="w-full">
                                                                             <span
                                                                                 class="text-gray-500 dark:text-gray-400">Paid:</span>
                                                                             <span
@@ -248,7 +249,7 @@
                                                                             $item->amount - ($item->paid_total ?? 0);
                                                                     @endphp
                                                                     <span
-                                                                        class="inline-flex items-center px-2 py-1 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 text-xs font-bold rounded-md">
+                                                                        class="inline-flex items-center px-2 py-1 bg-red-100 dark:bg-red-800/30 text-red-700 dark:text-red-300 text-xs font-bold rounded-md">
                                                                         ₱{{ number_format($remaining, 2, '.', ',') }}
                                                                     </span>
                                                                 </div>
@@ -302,6 +303,7 @@
                                                 @endif
                                             </flux:tooltip.content>
                                         </flux:tooltip>
+                                        </div>
                                     </td>
                                     <td></td>
                                 </tr>
@@ -317,7 +319,7 @@
                     <div class="p-2 bg-blue-500 rounded-lg">
                         <flux:icon name="plus" class="w-4 h-4 text-white" />
                     </div>
-                    <h4 class="text-lg font-semibold text-gray-900 dark:text-white">Add Store Utang</h4>
+                    <h4 class="text-lg font-semibold text-gray-800 dark:text-white">Add Store Utang</h4>
                 </div>
 
                 <form wire:submit='storeUtang({{ $employee->id }})'
