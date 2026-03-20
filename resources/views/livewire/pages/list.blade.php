@@ -1,4 +1,4 @@
-<div wire:key='{{ $employee->id }}'>
+<div wire:key='{{ $employee->id }}' wire:loading.remove wire:target='handleFilter,search'>
     <flux:modal.trigger name="show-employee-details-{{ $employee->id }}">
         <div
             class="group relative bg-white dark:bg-gray-800 rounded-2xl shadow-sm hover:shadow-xl border border-gray-200 dark:border-gray-700 transition-all duration-300 hover:-translate-y-1 cursor-pointer overflow-hidden">
@@ -10,13 +10,16 @@
                 <div class="flex items-start justify-between mb-4">
                     <div class="flex-1">
                         <div class="flex items-center gap-2 mb-1">
-                            <h3 class="text-xl font-bold text-gray-800 w-24 truncate dark:text-white">{{ $employee->name }}</h3>
-                            <flux:badge color="gray" size="sm" icon="briefcase" class="w-24 truncate">{{ $employee->position }}
+                            <h3 class="text-xl font-bold text-gray-800 w-24 truncate dark:text-white">
+                                {{ $employee->name }}</h3>
+                            <flux:badge color="gray" size="sm" icon="briefcase" class="w-24 truncate">
+                                {{ $employee->position }}
                             </flux:badge>
                         </div>
                         <div class="flex items-center gap-2 text-sm">
                             <flux:icon name="building-office" class="w-4 h-4 text-gray-400" />
-                            <span class="text-gray-600 dark:text-gray-300 w-48 truncate">{{ $employee->department }}</span>
+                            <span
+                                class="text-gray-600 dark:text-gray-300 w-48 truncate">{{ $employee->department }}</span>
                         </div>
                     </div>
 
@@ -180,129 +183,148 @@
                                     <td class="px-6 py-3 font-bold text-red-600 dark:text-red-400">
                                         <div class="flex gap-2 items-center">
                                             <span>₱{{ number_format($employee->totalBillings($this->totalPayments), 2, '.', ',') }}</span>
-                                        <flux:tooltip position="right" toggleable>
-                                            <flux:button size="xs" icon="information-circle" variant="ghost"
-                                                wire:click="remainingBillings({{ $employee->id }})"
-                                                class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors" />
+                                            <flux:tooltip position="right" toggleable>
+                                                <flux:button size="xs" icon="information-circle" variant="ghost"
+                                                    wire:click="$set('id', {{ $employee->id }})"
+                                                    class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors" />
 
-                                            <flux:tooltip.content
-                                                class="!w-[350px] !max-w-[450px] !p-4 !bg-white dark:!bg-gray-800 !shadow-xl !rounded-xl !border !border-gray-200 dark:!border-gray-700">
-                                                <!-- Header with Gradient -->
-                                                <div class="flex items-center gap-2 mb-3">
-                                                    <div
-                                                        class="p-1.5 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg">
-                                                        <flux:icon name="chart-pie" class="w-4 h-4 text-white" />
-                                                    </div>
-                                                    <div>
-                                                        <h4 class="font-bold text-gray-800 dark:text-white">Remaining
-                                                            Balance</h4>
-                                                        <p class="text-xs text-gray-500 dark:text-gray-400">Unpaid
-                                                            items breakdown</p>
-                                                    </div>
-                                                </div>
-
-                                                <flux:separator class="my-2" />
-
-                                                <!-- Items List with better spacing and visual feedback -->
-                                                <div
-                                                    class="space-y-3 max-h-[250px] overflow-y-auto pr-1 custom-scrollbar">
-                                                    @forelse ($this->items as $item)
+                                                <flux:tooltip.content
+                                                    class="!w-[350px] !max-w-[450px] !p-4 !bg-white dark:!bg-gray-800 !shadow-xl !rounded-xl !border !border-gray-200 dark:!border-gray-700">
+                                                    <!-- Header with Gradient -->
+                                                    <div class="flex items-center gap-2 mb-3">
                                                         <div
-                                                            class="group/item p-2 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-all">
-                                                            <div class="flex items-start justify-between gap-2">
-                                                                <div class="flex-1 min-w-0">
-                                                                    <div class="flex items-center gap-1.5">
-                                                                        <span
-                                                                            class="w-1.5 h-1.5 bg-red-500 rounded-full"></span>
-                                                                        <span
-                                                                            class="font-semibold text-sm text-gray-700 dark:text-gray-200 truncate"
-                                                                            title="{{ $item->title }}">
-                                                                            {{ Str::limit($item->title, 20) }}
-                                                                        </span>
-                                                                    </div>
-
-                                                                    <!-- Amount Details -->
-                                                                    <div class="mt-1.5 flex items-center gap-2 text-xs">
-                                                                        <div class="w-full">
-                                                                            <span
-                                                                                class="text-gray-500 dark:text-gray-400">Total:</span>
-                                                                            <span
-                                                                                class="ml-1 font-medium text-gray-700 dark:text-gray-300">
-                                                                                ₱{{ number_format($item->amount, 2, '.', ',') }}
-                                                                            </span>
-                                                                        </div>
-                                                                        <div class="w-full">
-                                                                            <span
-                                                                                class="text-gray-500 dark:text-gray-400">Paid:</span>
-                                                                            <span
-                                                                                class="ml-1 font-medium text-green-600 dark:text-green-400">
-                                                                                ₱{{ number_format($item->paid_total ?? 0, 2, '.', ',') }}
-                                                                            </span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                                <!-- Remaining Amount Badge -->
-                                                                <div class="flex-shrink-0">
-                                                                    @php
-                                                                        $remaining =
-                                                                            $item->amount - ($item->paid_total ?? 0);
-                                                                    @endphp
-                                                                    <span
-                                                                        class="inline-flex items-center px-2 py-1 bg-red-100 dark:bg-red-800 text-red-700 dark:text-red-300 text-xs font-bold rounded-md">
-                                                                        ₱{{ number_format($remaining, 2, '.', ',') }}
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-
-                                                            <!-- Progress Bar -->
-                                                            @php
-                                                                $percentage =
-                                                                    $item->amount > 0
-                                                                        ? (($item->paid_total ?? 0) / $item->amount) *
-                                                                            100
-                                                                        : 0;
-                                                            @endphp
-                                                            <div class="mt-2">
-                                                                <div
-                                                                    class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5">
-                                                                    <div class="bg-gradient-to-r from-blue-500 to-purple-600 h-1.5 rounded-full transition-all duration-300"
-                                                                        style="width: {{ $percentage }}%"></div>
-                                                                </div>
-                                                            </div>
+                                                            class="p-1.5 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg">
+                                                            <flux:icon name="chart-pie" class="w-4 h-4 text-white" />
                                                         </div>
-                                                    @empty
-                                                        <div class="text-center py-6">
-                                                            <div
-                                                                class="inline-flex p-2 bg-gray-100 dark:bg-gray-700 rounded-full mb-2">
-                                                                <flux:icon name="check-circle"
-                                                                    class="w-5 h-5 text-gray-400" />
-                                                            </div>
-                                                            <p class="text-sm text-gray-600 dark:text-gray-300">No
-                                                                remaining items</p>
-                                                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                                                                All bills are paid</p>
-                                                        </div>
-                                                    @endforelse
-                                                </div>
-
-                                                <!-- Footer Summary -->
-                                                @if (count($this->items) > 0)
-                                                    <div
-                                                        class="mt-3 pt-3 border-t border-gray-200 dark:border-gray-700">
-                                                        <div class="flex items-center justify-between">
-                                                            <span
-                                                                class="text-xs font-medium text-gray-600 dark:text-gray-400">Total
-                                                                Remaining:</span>
-                                                            <span
-                                                                class="text-sm font-bold text-red-600 dark:text-red-400">
-                                                                ₱{{ number_format(collect($this->items)->sum(fn($item) => $item->amount - ($item->paid_total ?? 0)), 2, '.', ',') }}
-                                                            </span>
+                                                        <div>
+                                                            <h4 class="font-bold text-gray-800 dark:text-white">
+                                                                Remaining
+                                                                Balance</h4>
+                                                            <p class="text-xs text-gray-500 dark:text-gray-400">Unpaid
+                                                                items breakdown</p>
                                                         </div>
                                                     </div>
-                                                @endif
-                                            </flux:tooltip.content>
-                                        </flux:tooltip>
+
+                                                    <flux:separator class="my-2" />
+
+                                                    <!-- Items List with better spacing and visual feedback -->
+                                                    <div
+                                                        class="space-y-3 max-h-[250px] overflow-y-auto pr-1 custom-scrollbar">
+                                                        <div wire:loading wire:target='id' class="w-full">
+                                                            <flux:skeleton.group animate="shimmer">
+                                                                <flux:skeleton.line class="mb-2 w-1/4" />
+                                                                <flux:skeleton.line />
+                                                                <flux:skeleton.line />
+                                                                <flux:skeleton.line class="w-3/4" />
+                                                            </flux:skeleton.group>
+                                                        </div>
+                                                        <div wire:loading.remove wire:target='id'>
+                                                            @forelse ($this->items as $item)
+                                                                <div
+                                                                    class="group/item p-2 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-all">
+                                                                    <div
+                                                                        class="flex items-start justify-between gap-2">
+                                                                        <div class="flex-1 min-w-0">
+                                                                            <div class="flex items-center gap-1.5">
+                                                                                <span
+                                                                                    class="w-1.5 h-1.5 bg-red-500 rounded-full"></span>
+                                                                                <span
+                                                                                    class="font-semibold text-sm text-gray-700 dark:text-gray-200 truncate"
+                                                                                    title="{{ $item->title }}">
+                                                                                    {{ Str::limit($item->title, 20) }}
+                                                                                </span>
+                                                                            </div>
+
+                                                                            <!-- Amount Details -->
+                                                                            <div
+                                                                                class="mt-1.5 flex items-center gap-2 text-xs">
+                                                                                <div class="w-full">
+                                                                                    <span
+                                                                                        class="text-gray-500 dark:text-gray-400">Total:</span>
+                                                                                    <span
+                                                                                        class="ml-1 font-medium text-gray-700 dark:text-gray-300">
+                                                                                        ₱{{ number_format($item->amount, 2, '.', ',') }}
+                                                                                    </span>
+                                                                                </div>
+                                                                                <div class="w-full">
+                                                                                    <span
+                                                                                        class="text-gray-500 dark:text-gray-400">Paid:</span>
+                                                                                    <span
+                                                                                        class="ml-1 font-medium text-green-600 dark:text-green-400">
+                                                                                        ₱{{ number_format($item->paid_total ?? 0, 2, '.', ',') }}
+                                                                                    </span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <!-- Remaining Amount Badge -->
+                                                                        <div class="flex-shrink-0">
+                                                                            @php
+                                                                                $remaining =
+                                                                                    $item->amount -
+                                                                                    ($item->paid_total ?? 0);
+                                                                            @endphp
+                                                                            <span
+                                                                                class="inline-flex items-center px-2 py-1 bg-red-100 dark:bg-red-800 text-red-700 dark:text-red-300 text-xs font-bold rounded-md">
+                                                                                ₱{{ number_format($remaining, 2, '.', ',') }}
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <!-- Progress Bar -->
+                                                                    @php
+                                                                        $percentage =
+                                                                            $item->amount > 0
+                                                                                ? (($item->paid_total ?? 0) /
+                                                                                        $item->amount) *
+                                                                                    100
+                                                                                : 0;
+                                                                    @endphp
+                                                                    <div class="mt-2">
+                                                                        <div
+                                                                            class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5">
+                                                                            <div class="bg-gradient-to-r from-blue-500 to-purple-600 h-1.5 rounded-full transition-all duration-300"
+                                                                                style="width: {{ $percentage }}%">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            @empty
+                                                                <div class="text-center py-6">
+                                                                    <div
+                                                                        class="inline-flex p-2 bg-gray-100 dark:bg-gray-700 rounded-full mb-2">
+                                                                        <flux:icon name="check-circle"
+                                                                            class="w-5 h-5 text-gray-400" />
+                                                                    </div>
+                                                                    <p
+                                                                        class="text-sm text-gray-600 dark:text-gray-300">
+                                                                        No
+                                                                        remaining items</p>
+                                                                    <p
+                                                                        class="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                                                                        All bills are paid</p>
+                                                                </div>
+                                                            @endforelse
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Footer Summary -->
+                                                    @if (count($this->items) > 0)
+                                                        <div
+                                                            class="mt-3 pt-3 border-t border-gray-200 dark:border-gray-700">
+                                                            <div class="flex items-center justify-between">
+                                                                <span
+                                                                    class="text-xs font-medium text-gray-600 dark:text-gray-400">Total
+                                                                    Remaining:</span>
+                                                                <span
+                                                                    class="text-sm font-bold text-red-600 dark:text-red-400">
+                                                                    ₱{{ number_format(collect($this->items)->sum(fn($item) => $item->amount - ($item->paid_total ?? 0)), 2, '.', ',') }}
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    @endif
+                                                </flux:tooltip.content>
+                                            </flux:tooltip>
                                         </div>
                                     </td>
                                     <td></td>
