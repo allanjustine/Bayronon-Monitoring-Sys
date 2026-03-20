@@ -33,6 +33,7 @@ class Index extends Component
     public function employees()
     {
         return Employee::query()
+            ->with('payments')
             ->withSum('payments', 'employee_payments.amount')
             ->when(
                 $this->search,
@@ -58,7 +59,7 @@ class Index extends Component
                 $this->is_kuwangan,
                 fn($utangan)
                 =>
-                $utangan->having('payments_sum_employee_paymentsamount', '<', $this->totalPayments())
+                $utangan->having('payments_sum_employee_paymentsamount', '<', $this->totalPayments)
             )
             ->orderBy('name')
             ->get();

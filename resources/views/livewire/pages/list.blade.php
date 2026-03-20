@@ -310,15 +310,19 @@
 
                                                     <!-- Footer Summary -->
                                                     @if (count($this->items) > 0)
-                                                        <div
-                                                            class="mt-3 pt-3 border-t border-gray-200 dark:border-gray-700">
+                                                        <div class="mt-3 pt-3 border-t border-gray-200 dark:border-gray-700">
                                                             <div class="flex items-center justify-between">
                                                                 <span
                                                                     class="text-xs font-medium text-gray-600 dark:text-gray-400">Total
                                                                     Remaining:</span>
-                                                                <span
+                                                                <span wire:loading.remove wire:target='id'
                                                                     class="text-sm font-bold text-red-600 dark:text-red-400">
                                                                     ₱{{ number_format(collect($this->items)->sum(fn($item) => $item->amount - ($item->paid_total ?? 0)), 2, '.', ',') }}
+                                                                </span>
+                                                                <span wire:loading wire:target='id' class="w-1/4">
+                                                                    <flux:skeleton.group animate="shimmer">
+                                                                        <flux:skeleton.line />
+                                                                    </flux:skeleton.group>
                                                                 </span>
                                                             </div>
                                                         </div>
