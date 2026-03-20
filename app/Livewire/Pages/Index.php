@@ -19,10 +19,13 @@ class Index extends Component
     #[Title('Home')]
 
     public string $search = '';
-    public $items = [];
 
     #[Validate(['required', 'numeric', 'gte:1'])]
     public int $amount = 1;
+
+    public int $id = 0;
+    public bool $is_utangan = false;
+    public bool $is_kuwangan = false;
 
     #[Computed]
     #[On('items:refresh')]
@@ -45,6 +48,18 @@ class Index extends Component
                     ], 'LIKE', "%{$this->search}%")
                 )
             )
+            ->when(
+                $this->is_utangan,
+                fn($utangan)
+                =>
+                $utangan->has('utangs')
+            )
+            ->when(
+                $this->is_kuwangan,
+                fn($utangan)
+                =>
+                $utangan->having('payments_sum_employee_paymentsamount', '<', $this->totalPayments())
+            )
             ->orderBy('name')
             ->get();
     }
@@ -56,15 +71,16 @@ class Index extends Component
             ->sum('amount');
     }
 
-    public function remainingBillings($id)
+    #[Computed]
+    public function items()
     {
-        $this->items = Payment::query()
+        return Payment::query()
             ->withSum([
                 'employees as paid_total'
                 =>
                 fn($q)
                 =>
-                $q->where('employee_id', $id)
+                $q->where('employee_id', $this->id)
             ], 'employee_payments.amount')
             ->get()
             ->filter(fn($item) => $item->paid_total < $item->amount);
@@ -98,6 +114,11 @@ class Index extends Component
         RefreshEvent::dispatch();
 
         return;
+    }
+
+    public function handleFilter($title)
+    {
+        return $this->$title = !$this->$title;
     }
 
     public function render()
