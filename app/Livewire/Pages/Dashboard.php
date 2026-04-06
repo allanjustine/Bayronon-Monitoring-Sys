@@ -8,11 +8,11 @@ use Livewire\Attributes\Title;
 use Livewire\Component;
 use App\Traits\DashboardTrait;
 
+#[Layout('components.layouts.app')]
 class Dashboard extends Component
 {
     use DashboardTrait;
 
-    #[Layout('components.layouts.app')]
     #[Title('Admin | Dashboard')]
 
     #[Computed]

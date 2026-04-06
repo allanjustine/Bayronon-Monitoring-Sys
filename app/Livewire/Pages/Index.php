@@ -12,9 +12,9 @@ use Livewire\Attributes\Title;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 
+#[Layout('components.layouts.home')]
 class Index extends Component
 {
-    #[Layout('components.layouts.home')]
 
     #[Title('Home')]
 
